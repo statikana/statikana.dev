@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../CSS/Snake.css';
 
 const width = 10;
@@ -69,7 +70,20 @@ function placeRandomApple() {
 function onKey(key) {
 	/* trigged on key press, activates the movement mechanics */
 	if (key.code === "Space") {
-		window.location.reload();
+		// restart the game
+		// cant use window.location.reload() because it would reload the page
+		// and react just kinda dies
+		snake = [
+			[0, 2],
+			[0, 1],
+			[0, 0],
+		];
+		apple = null;
+		moving_direction = "ArrowRight";
+		latest_direction = "ArrowRight";
+		started = false;
+		createBoard();
+		draw();
 	} else if (equalsInverseDirection(key.code)) {
 		return;
 	} else {
@@ -245,7 +259,7 @@ function Snake() {
                 <canvas width={600} height={600} id="snake" />
             </div>
             <div className="hallow-buttons">
-                <a href="/">go back</a>
+				<Link to="/">back</Link>
             </div>
             </div>
         </div>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../CSS/Resources.css';
 
 function Resources() {
@@ -80,7 +81,7 @@ function Resources() {
                     </div>
                 </div>
                 <div className="hallow-buttons">
-                    <a href="/">go back</a>
+                    <Link to="/">go back</Link>
                 </div>
                 </div>
             </div>
