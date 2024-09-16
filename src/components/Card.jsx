@@ -1,4 +1,5 @@
 import '../CSS/Card.css';
+import { Link } from 'react-router-dom';
 
 function Card() {
     return (<>
@@ -25,9 +26,8 @@ function Card() {
               <i>- made with &lt;3 by maxine, fretgfr, and me -</i>
             </p>
             <div className="hallow-buttons">
-              <a onClick={() => {window.location.href = "/resources";}}>cool stuff</a>
-              <a onClick={() => {window.location.href = "/snake";}}>snake</a>
-              <a href="/">chat/file share</a>
+              <Link to="/Resources">resources</Link>
+              <Link to="/Snake">snake</Link>
             </div>
             <div className="buttons">
               <a
