@@ -1,13 +1,5 @@
 import '../CSS/Card.css';
 
-function sendToResources() {
-  window.location.href = "/resources";
-}
-
-function sendToSnake() {
-  window.location.href = "/snake";
-}
-
 function Card() {
     return (<>
       <script src="https://kit.fontawesome.com/04c5cc98c2.js" crossorigin="anonymous"></script>
@@ -33,8 +25,8 @@ function Card() {
               <i>- made with &lt;3 by maxine, fretgfr, and me -</i>
             </p>
             <div className="hallow-buttons">
-              <a href="/resources" onClick={sendToResources}>cool stuff</a>
-              <a href="/snake" onClick={sendToSnake}>snake</a>
+              <a onClick={() => {window.location.href = "/resources";}}>cool stuff</a>
+              <a onClick={() => {window.location.href = "/snake";}}>snake</a>
               <a href="/">chat/file share</a>
             </div>
             <div className="buttons">
