@@ -20,6 +20,8 @@ var latest_direction = "ArrowRight";
 
 var started = false;
 
+var current_interval = null;
+
 document.addEventListener("keydown", onKey);
 
 window.onload = function ()  {
@@ -29,7 +31,7 @@ window.onload = function ()  {
 
 function startGame() {
 	createBoard();
-	setInterval(frame, 350);
+	current_interval = setInterval(frame, 350);
 }
 
 function indexToCoordinates(index) {
@@ -82,8 +84,14 @@ function onKey(key) {
 		moving_direction = "ArrowRight";
 		latest_direction = "ArrowRight";
 		started = false;
+		
+		if (current_interval != null) {
+			clearInterval(current_interval);
+		}
+		current_interval = null;
 		createBoard();
 		draw();
+
 	} else if (equalsInverseDirection(key.code)) {
 		return;
 	} else {
