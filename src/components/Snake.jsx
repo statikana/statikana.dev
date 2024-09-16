@@ -50,7 +50,7 @@ function createBoard() {
 
 function placeRandomApple() {
 	let apple_coords = snake[0];
-	placed = false;
+	let placed = false;
 	while (!placed) {
 		apple_coords = indexToCoordinates(
 			Math.floor(Math.random() * width * height)
@@ -69,7 +69,7 @@ function placeRandomApple() {
 function onKey(key) {
 	/* trigged on key press, activates the movement mechanics */
 	if (key.code === "Space") {
-		location.reload();
+		window.location.reload();
 	} else if (equalsInverseDirection(key.code)) {
 		return;
 	} else {
@@ -114,7 +114,7 @@ function checkForSelfCollision() {
 	snake.slice(1).forEach(pos => {
 		if (pos[0] == head[0] && pos[1] == head[1]) {
 			alert("You ran into yourself! Press \"OK\" to try again.");
-			location.reload();
+			window.location.reload();
 		}
 	});
 }
@@ -198,10 +198,9 @@ function draw() {
 	let ctx = canvas.getContext("2d");
 	for (let i = 0; i < 600; i += 60) {
 		for (let j = 0; j < 600; j += 60) {
-			item = squares[j / 60][i / 60];
 			let fill = "";
 			let is_bordered = false;
-			switch (item) {
+			switch (squares[j / 60][i / 60]) {
 				case "x":
 					fill = "#222222";
 					break;
@@ -246,7 +245,7 @@ function Snake() {
                 <canvas width={600} height={600} id="snake" />
             </div>
             <div className="hallow-buttons">
-                <a href="/play.html">go back</a>
+                <a href="/src">go back</a>
             </div>
             </div>
         </div>

@@ -25,8 +25,8 @@ function Card() {
               <i>- made with &lt;3 by maxine, fretgfr, and me -</i>
             </p>
             <div className="hallow-buttons">
-              <a onClick={() => {window.location.href = "/resources";}}>cool stuff</a>
-              <a onClick={() => {window.location.href = "/snake";}}>snake</a>
+              <a onClick={() => {window.location.href = "/src/resources";}}>cool stuff</a>
+              <a onClick={() => {window.location.href = "/src/snake";}}>snake</a>
               <a href="/">chat/file share</a>
             </div>
             <div className="buttons">

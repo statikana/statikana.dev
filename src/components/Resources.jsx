@@ -80,7 +80,7 @@ function Resources() {
                     </div>
                 </div>
                 <div className="hallow-buttons">
-                    <a href="/">go back</a>
+                    <a href="/src">go back</a>
                 </div>
                 </div>
             </div>

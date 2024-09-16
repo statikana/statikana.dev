@@ -12,6 +12,7 @@
     "react-firebase-hooks": "^5.1.1",
     "react-router-dom": "^6.26.2",
     "react-scripts": "5.0.1",
+    "serve": "^14.2.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -39,7 +40,7 @@
     ]
   },
   "engines": {
-    "node": "20.x",
-    "npm": "10.x"
+    "node": "^20.x",
+    "npm": "^10.x"
   }
 }
