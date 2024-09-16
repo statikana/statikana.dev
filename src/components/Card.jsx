@@ -15,7 +15,7 @@ function Card() {
       <div className="container">
         <div className="card">
           <div className="profile-pic">
-            <img src={require("../avatar-2.png")} />
+            <img src={require("../avatar256.png")} />
             <h2>im statikana</h2>
           </div>
           <div className="profile-text">
