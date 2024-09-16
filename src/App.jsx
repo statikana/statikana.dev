@@ -5,7 +5,7 @@ import Snake from './components/Snake';
 
 function App() {
 	return (
-		<Router basename="/src">
+		<Router basename="/">
 			<Routes>
 				<Route path="/" element={<Card />} />
 				<Route path="/resources" element={<Resources />} />
