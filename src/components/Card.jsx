@@ -28,6 +28,7 @@ function Card() {
             <div className="hallow-buttons">
               <Link to="/Resources">resources</Link>
               <Link to="/Snake">snake</Link>
+              <Link to="/Chat">chat</Link>
             </div>
             <div className="buttons">
               <a
