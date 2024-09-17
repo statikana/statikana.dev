@@ -43,7 +43,6 @@
 }
 
 #messages {
-	display: flex;
 	flex-direction: column;
 	width: 100;
 }
@@ -53,6 +52,57 @@
 	bottom: 0;
 	width: 100%;
 	background: #222222;
+	flex-direction: row;
+}
+
+#message-input {
+	width: 70%;
+	padding: 12px 20px;
+	box-sizing: border-box;
+	background: #222222;
+	border: 1px solid #444;
+	color: #fcfcfc;
+	font-family: "JetBrains Mono", monospace;
+}
+
+#message-input:focus {
+	outline: none;
+}
+
+#message-submit {
+	width: 15%;
+	font-family: "JetBrains Mono", monospace;
+	background: #444;
+	color: #fcfcfc;
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+}
+
+#message-submit:hover {
+	background: #555;
+	transition: background .5s;
+}
+
+#sign-out {
+	width: 15%;
+	font-family: "JetBrains Mono", monospace;
+	background: #444;
+	color: #fcfcfc;
+	padding-top: .75rem;
+	padding-bottom: .75rem;
+	margin: 8px 0;
+	border-top-right-radius: .25rem;
+	border-bottom-right-radius: .25rem;
+	border: none;
+	cursor: pointer;
+}
+
+#sign-out:hover {
+	background: #555;
+	transition: background .5s;
 }
 
 #chat-room {

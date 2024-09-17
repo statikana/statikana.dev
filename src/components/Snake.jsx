@@ -24,14 +24,13 @@ var current_interval = null;
 
 window.onload = function () {
 	placeRandomApple();
-	draw();
 };
 
 document.addEventListener("keydown", onKey);
 
 function startGame() {
 	createBoard();
-	current_interval = setInterval(frame, 350);
+	current_interval = setInterval(frame, 200);
 }
 
 function indexToCoordinates(index) {
@@ -52,20 +51,23 @@ function createBoard() {
 }
 
 function placeRandomApple() {
-	let apple_coords = snake[0];
-	let placed = false;
-	while (!placed) {
-		apple_coords = indexToCoordinates(
-			Math.floor(Math.random() * width * height)
-		);
-		placed = true;
-		snake.forEach(pos => {
-			if (apple_coords[0] == pos[0] && apple_coords[1] == pos[1]) {
-				placed = false;
+	/* coords of random square that is not occupied by the snake */
+	createSquares();
+	setSquares();
+	let possible_coords = [];
+	for (let i = 0; i < width; i++) {
+		for (let j = 0; j < height; j++) {
+			if (squares[i][j] == "s" || squares[i][j] == "h") {
+				continue;
 			}
-		});
+			possible_coords.push([i, j]);
+		}
 	}
-	apple = apple_coords;
+	if (possible_coords.length == 0) {
+		alert("You won! Press \"OK\" to play again.");
+		window.location.reload();
+	}
+	apple = possible_coords[Math.floor(Math.random() * possible_coords.length)];
 }
 
 

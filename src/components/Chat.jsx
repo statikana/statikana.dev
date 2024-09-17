@@ -67,15 +67,16 @@ function SignIn() {
 
 function SignOut() {
 	return auth.currentUser && (
-		<button onClick={() => auth.signOut()}>Sign Out</button>
+		<button id="sign-out" onClick={() => auth.signOut()}>sign out</button>
 	)
 }
 
 function ChatRoom() {
 	const messagesRef = firestore.collection('messages');
-	const query = messagesRef.orderBy('createdAt').limit(25);
+	const query = messagesRef.orderBy('createdAt').limit(100);
 
 	const [messages] = useCollectionData(query);
+	console.log(messages);
 	const [formValue, setFormValue] = useState('');
 
 	const sendMessage = async (e) => {
@@ -105,14 +106,12 @@ function ChatRoom() {
 				</div>
 				
 				<div id="sticky-input">
-					<form onSubmit={sendMessage}>
-						<input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-						<button type="submit">Send</button>
+					<form onSubmit={sendMessage} id="message-form" autoComplete="off">
+						<input value={formValue} onChange={(e) => setFormValue(e.target.value)} id="message-input" />
+						<button type="submit" id="message-submit">send</button>
+						<SignOut />
 					</form>
 
-					<div>
-						<SignOut />
-					</div>
 				</div>
 			</div>
 		</>
