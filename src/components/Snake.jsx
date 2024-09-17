@@ -22,12 +22,12 @@ var started = false;
 
 var current_interval = null;
 
-document.addEventListener("keydown", onKey);
-
-window.onload = function ()  {
+window.onload = function () {
 	placeRandomApple();
 	draw();
 };
+
+document.addEventListener("keydown", onKey);
 
 function startGame() {
 	createBoard();
@@ -217,6 +217,9 @@ function draw() {
 	createSquares();
 	setSquares();
 	let canvas = document.querySelector("div canvas");
+	if (canvas == null) {
+		return;
+	}
 	let ctx = canvas.getContext("2d");
 	for (let i = 0; i < 600; i += 60) {
 		for (let j = 0; j < 600; j += 60) {
@@ -259,7 +262,7 @@ function Snake() {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Snake</title>
         <link rel="stylesheet" href="/CSS/snake.css" />
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon-2.ico?" />
+        <link rel="shortcut icon" type="image/x-icon" href="%PUBLIC_URL%/icon128.ico" />
         <div className="container">
             <div className="card">
             <h3>move using arrow keys or WASD</h3>

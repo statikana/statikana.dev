@@ -3,8 +3,8 @@
   "name": "statikana's website",
   "icons": [
     {
-      "src": "./logo128.png",
-      "type": "image/png",
+      "src": "./src/icon128.ico",
+      "type": "image/x-icon",
       "sizes": "128x128"
     }
   ],

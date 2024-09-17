@@ -11,7 +11,7 @@ function Resources() {
             <meta name="description" content="Welcome to my website." />
             <meta name="keywords" content="Statikana, Website" />
             <meta name="author" content="Statikana" />
-            <link rel="shortcut icon" type="image/x-icon" href="/favicon-2.ico?" />
+            <link rel="shortcut icon" type="image/x-icon" href="%PUBLIC_URL%/icon128.ico" />
             <div className="container">
                 <div className="card">
                 <div className="title">

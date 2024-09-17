@@ -11,7 +11,7 @@ function Card() {
       {/* Standard Meta Tags */}
       <meta name="keywords" content="statikana, Website" />
       <meta name="author" content="statikana" />
-      <link rel="shortcut icon" type="image/x-icon" href="../favicon-2.ico?" />
+      <link rel="shortcut icon" type="image/x-icon" href="%PUBLIC_URL%/icon128.ico" />
       <div className="container">
         <div className="card">
           <div className="profile-pic">
