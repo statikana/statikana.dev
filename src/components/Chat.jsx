@@ -26,7 +26,7 @@ function Chat() {
 
 	return (
 		<>
-			<title>Statikana</title>
+			<title>statikana</title>
 			<header>
 				
 			</header>
@@ -39,8 +39,8 @@ function Chat() {
 }
 
 function SignIn() {
-	const signInWithGoogle = () => {
-		const provider = new firebase.auth.GoogleAuthProvider();
+	const signInWithGitHub = () => {
+		const provider = new firebase.auth.GithubAuthProvider();
 		auth.signInWithPopup(provider).then((result) => {
 			let user = result.user;
 			let userRef = firestore.collection('users');
@@ -62,7 +62,7 @@ function SignIn() {
 	}
 
 	return (
-		<button onClick={signInWithGoogle}>Sign in with Google</button>
+		<button onClick={signInWithGitHub}>Sign in with GitHub</button>
 	)
 }
 
