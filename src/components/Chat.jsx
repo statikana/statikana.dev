@@ -26,14 +26,14 @@ function Chat() {
 
 	return (
 		<>
-			<title>statikana</title>
-			<header>
-				
-			</header>
+			<div id="chat">
+				<title>statikana</title>
+				<header></header>
 
-			<section>
-				{user ? <ChatRoom /> : <SignIn />}
-			</section>
+				<section id="chatroom-section">
+					{user ? <ChatRoom /> : <SignIn />}
+				</section>
+			</div>
 		</>
 	);
 }
@@ -58,7 +58,6 @@ function SignIn() {
 				}
 			});
 		});
-
 	}
 
 	return (
@@ -91,23 +90,29 @@ function ChatRoom() {
 			uid
 		});
 
+		// scroll to the bottom of the chat
+		const chat = document.getElementById('messages');
+		window.scrollTo(0, chat.scrollHeight);
 		setFormValue('');
+
 	}
 
 	return (
 		<>
-			<div className="chat-room">
-				<div>
+			<div id="chat-room">
+				<div id="messages">
 					{messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
 				</div>
 				
-				<form onSubmit={sendMessage}>
-					<input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
-					<button type="submit">Send</button>
-				</form>
+				<div id="sticky-input">
+					<form onSubmit={sendMessage}>
+						<input value={formValue} onChange={(e) => setFormValue(e.target.value)} />
+						<button type="submit">Send</button>
+					</form>
 
-				<div>
-					<SignOut />
+					<div>
+						<SignOut />
+					</div>
 				</div>
 			</div>
 		</>
@@ -116,11 +121,12 @@ function ChatRoom() {
 
 
 function ChatMessage(props) {
-    const [user, setUser] = useState(null);
 	const msg = props.message;
     const userRef = firestore.collection('users');
     const query = userRef.where('uid', '==', msg.uid);
     const [snapshot] = useCollectionData(query);
+
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
       if (snapshot) {
@@ -128,11 +134,14 @@ function ChatMessage(props) {
       }
     }, [snapshot]);
 
+
+
 	return (
-		<div className={`message ${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
+		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
 			<p>
-                {user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
-                <br />
+				{user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
+				{user ? (<a className="message-chatname">{user.email.split('@')[0]}</a>) : (<a>loading...</a>)}
+				<br />
                 <a className="message-text">{msg.text}</a>
             </p>
 		</div>

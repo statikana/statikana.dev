@@ -1,4 +1,4 @@
-/* HTML Structure:
+/* /* HTML Structure:
 
 		<>
 			<div className="chat-room">
@@ -22,14 +22,69 @@
 		<div className={`message ${messageClass}`}>
 			<p>{text}</p>
 		</div>
-
 */
 
-.chat-room {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100vh;
-    color: white
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&");
+
+#root {
+	min-width: 50%;
 }
+
+#chat {
+	background-color: #222222;
+	color: white;
+	font-family: "JetBrains Mono", monospace;
+	width: 100%;
+}
+
+
+#chatroom-section {
+	width: 100%;
+}
+
+#messages {
+	display: flex;
+	flex-direction: column;
+	width: 100;
+}
+
+#sticky-input {
+	position: sticky;
+	bottom: 0;
+	width: 100%;
+	background: #222222;
+}
+
+#chat-room {
+	color: white;
+	padding-right: 2rem;
+	padding-left: 2rem;	
+}
+
+.message-photoURL {
+	width: 30px;
+	height: 30px;
+	border-radius: .25rem;
+}
+
+.message-text {
+	margin-left: .5rem;
+}
+
+.message-chatname {
+	margin-left: .25rem;
+}
+
+.message-sent {
+	.message-chatname {
+		text-shadow: 0 0 .5rem #00bbff;;
+	}
+}
+
+.message-received {
+	.message-chatname {
+		text-shadow: .1rem .1rem .5rem #ff00bb;
+	}
+}
+
 
