@@ -43,6 +43,7 @@ function SignIn() {
 		const provider = new firebase.auth.GithubAuthProvider();
 		auth.signInWithPopup(provider).then((result) => {
 			let user = result.user;
+			console.log(user);
 			let userRef = firestore.collection('users');
 			let query = userRef.where('uid', '==', user.uid);
 			// if the user is not in the database, add them
@@ -50,11 +51,10 @@ function SignIn() {
 				if (querySnapshot.empty) {
 					userRef.add({
 						uid: user.uid,
-						displayName: user.displayName,
 						email: user.email,
 						photoURL: user.photoURL,
 						createdAt: firebase.firestore.FieldValue.serverTimestamp()
-					});
+					});	
 				}
 			});
 		});
@@ -132,7 +132,6 @@ function ChatMessage(props) {
 		<div className={`message ${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
 			<p>
                 {user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
-                {user ? (<span className="message-displayName">{user.displayName}</span>) : (<a>loading...</a>)}
                 <br />
                 <a className="message-text">{msg.text}</a>
             </p>
