@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../CSS/Chat.css';
 
 import firebase from 'firebase/compat/app';
@@ -76,7 +76,7 @@ function ChatRoom() {
 	const messagesRef = firestore.collection('messages');
 	const query = messagesRef.orderBy('createdAt').limit(25);
 
-	const [messages] = useCollectionData(query, { idField: 'id' });
+	const [messages] = useCollectionData(query);
 	const [formValue, setFormValue] = useState('');
 
 	const sendMessage = async (e) => {
@@ -116,13 +116,26 @@ function ChatRoom() {
 
 
 function ChatMessage(props) {
-	const { text, uid } = props.message;
+    const [user, setUser] = useState(null);
+	const msg = props.message;
+    const userRef = firestore.collection('users');
+    const query = userRef.where('uid', '==', msg.uid);
+    const [snapshot] = useCollectionData(query);
 
-	const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received'; 
+    useEffect(() => {
+      if (snapshot) {
+        setUser(snapshot[0]);
+      }
+    }, [snapshot]);
 
 	return (
-		<div className={`message ${messageClass}`}>
-			<p>{text}</p>
+		<div className={`message ${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
+			<p>
+                {user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
+                {user ? (<span className="message-displayName">{user.displayName}</span>) : (<a>loading...</a>)}
+                <br />
+                <a className="message-text">{msg.text}</a>
+            </p>
 		</div>
 	)
 }
