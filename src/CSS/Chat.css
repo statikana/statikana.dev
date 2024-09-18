@@ -5,17 +5,7 @@
 	background-color: #222222;
 	color: white;
 	font-family: "JetBrains Mono", monospace;
-<<<<<<< HEAD
-	min-width: 60vw;
-	max-width: 60vw;
-	height: 80vh;
-	max-height: 80vh;
-}
 
-#messages {
-	overflow-y: auto;
-	flex: 1;
-=======
 	width: 100%;
 	border-radius: 1rem;
 }
@@ -39,7 +29,6 @@
 	overflow-y: auto;
 	scrollbar-color: #444 #222;
 	scrollbar-width: thin;
->>>>>>> 4040e30acbae58224869c439c82b65dfde41d7f4
 }
 
 
