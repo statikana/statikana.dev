@@ -60,6 +60,20 @@
 	transition: background .5s;
 }
 
+#sign-in {
+	width: 15%;
+	height: 10%;
+	align-self: center;
+	font-family: "JetBrains Mono", monospace;
+	background: #444;
+	color: #fcfcfc;
+}
+
+#sign-in:hover {
+	background: #555;
+	transition: background .5s;
+}
+
 #sign-out {
 	width: 15%;
 	font-family: "JetBrains Mono", monospace;

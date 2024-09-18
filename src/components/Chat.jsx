@@ -58,7 +58,7 @@ function SignIn() {
 	}
 
 	return (
-		<button onClick={signInWithGitHub}>Sign in with GitHub</button>
+		<button id="sign-in" onClick={signInWithGitHub}>Sign in with GitHub</button>
 	)
 }
 
@@ -78,7 +78,10 @@ function ChatRoom() {
 	const sendMessage = async (e) => {
 		e.preventDefault(); // Prevents the page from refreshing when the form is submitted
 
-		const uid = auth.currentUser.uid;
+		const uid = auth.currentUser?.uid;
+		if (!uid) {
+			return;
+		}
 		
 		let currentScrollPos = document.getElementById('messages').scrollTop;
 		let maxScroll = document.getElementById('messages').scrollHeight - document.getElementById('messages').clientHeight;
