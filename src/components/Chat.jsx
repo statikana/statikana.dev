@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../CSS/Chat.css';
 
 import firebase from 'firebase/compat/app';
@@ -61,7 +62,7 @@ function SignIn() {
 	}
 
 	return (
-		<button onClick={signInWithGitHub}>Sign in with GitHub</button>
+		<button id="sign-in" onClick={signInWithGitHub}>Sign in with GitHub</button>
 	)
 }
 
@@ -76,14 +77,20 @@ function ChatRoom() {
 	const query = messagesRef.orderBy('createdAt').limit(100);
 
 	const [messages] = useCollectionData(query);
-	console.log(messages);
 	const [formValue, setFormValue] = useState('');
 
 	const sendMessage = async (e) => {
 		e.preventDefault(); // Prevents the page from refreshing when the form is submitted
 
-		const uid = auth.currentUser.uid;
-		console.log(uid);
+		const uid = auth.currentUser?.uid;
+		if (!uid) {
+			return;
+		}
+		
+		let currentScrollPos = document.getElementById('messages').scrollTop;
+		let maxScroll = document.getElementById('messages').scrollHeight - document.getElementById('messages').clientHeight;
+
+		let shouldScroll = Math.abs(currentScrollPos - maxScroll) <= 1;
 
 		let chat = document.getElementById('messages');
 		let currentScroll = chat.scrollTop;
