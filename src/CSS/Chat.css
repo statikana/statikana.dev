@@ -26,32 +26,27 @@
 
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&");
 
-#root {
-	min-width: 50%;
-}
 
 #chat {
 	background-color: #222222;
 	color: white;
 	font-family: "JetBrains Mono", monospace;
-	width: 100%;
-}
-
-
-#chatroom-section {
-	width: 100%;
+	min-width: 60vw;
+	max-width: 60vw;
+	height: 80vh;
+	max-height: 80vh;
 }
 
 #messages {
-	flex-direction: column;
-	width: 100;
+	overflow-y: auto;
+	flex: 1;
 }
 
+
 #sticky-input {
-	position: sticky;
-	bottom: 0;
+	position: fixed;
 	width: 100%;
-	background: #222222;
+ 	background: #222222;
 	flex-direction: row;
 }
 
