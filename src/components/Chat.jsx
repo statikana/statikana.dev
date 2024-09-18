@@ -86,11 +86,6 @@ function ChatRoom() {
 		if (!uid) {
 			return;
 		}
-		
-		let currentScrollPos = document.getElementById('messages').scrollTop;
-		let maxScroll = document.getElementById('messages').scrollHeight - document.getElementById('messages').clientHeight;
-
-		let shouldScroll = Math.abs(currentScrollPos - maxScroll) <= 1;
 
 		let chat = document.getElementById('messages');
 		let currentScroll = chat.scrollTop;
@@ -102,9 +97,6 @@ function ChatRoom() {
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 			uid
 		});
-		
-		/* if the user was already at the bottom of the chat, scroll to the bottom again */
-		/* if the user was not at the bottom of the chat, do not scroll to the bottom */
 		setFormValue('');
 
 		if (atBottom) {
