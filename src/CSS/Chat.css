@@ -53,6 +53,8 @@
 	margin: 8px 0;
 	border: none;
 	cursor: pointer;
+	border-top-right-radius: .5rem;
+	border-bottom-right-radius: .5rem;
 }
 
 #message-submit:hover {
@@ -74,23 +76,38 @@
 	transition: background .5s;
 }
 
-#sign-out {
-	width: 15%;
+#exit, .back {
+	width: 7.5%;
 	font-family: "JetBrains Mono", monospace;
 	background: #444;
 	color: #fcfcfc;
-	padding-top: .75rem;
-	padding-bottom: .75rem;
-	margin: 8px 0;
-	border-top-right-radius: .25rem;
-	border-bottom-right-radius: .25rem;
 	border: none;
 	cursor: pointer;
 }
 
-#sign-out:hover {
+#exit:hover, .back:hover{ 
 	background: #555;
 	transition: background .5s;
+}
+
+#exit {
+	border-top-left-radius: .5rem;
+	border-bottom-left-radius: .5rem;
+	padding-top: .95em;
+	padding-bottom: .75rem;
+}
+
+.back {
+	max-height: 2.5rem;
+	border-top-right-radius: .5rem;
+	border-bottom-right-radius: .5rem;
+	font-size: .9rem;
+	padding-top: .8em;
+	padding-bottom: 1.9rem;
+	padding-right: .5rem;
+	/* disable link styling */
+	text-decoration: none;
+	border-left: 5px solid #222222;
 }
 
 .message-photoURL {

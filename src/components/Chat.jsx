@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import '../CSS/Chat.css';
 
 import firebase from 'firebase/compat/app';
@@ -30,7 +31,7 @@ function Chat() {
 				<title>statikana</title>
 				<header></header>
 
-					{user ? <ChatRoom /> : <SignIn />}
+					{user ? <ChatRoom /> : (<> <SignIn /></>)}
 			</div>
 		</>
 	);
@@ -62,9 +63,9 @@ function SignIn() {
 	)
 }
 
-function SignOut() {
+function Exit() {
 	return auth.currentUser && (
-		<button id="sign-out" onClick={() => auth.signOut()}>sign out</button>
+		<button id="exit" onClick={() => auth.signOut()}>exit</button>
 	)
 }
 
@@ -111,7 +112,8 @@ function ChatRoom() {
 				<form onSubmit={sendMessage} id="message-form" autoComplete="off">
 					<input value={formValue} onChange={(e) => setFormValue(e.target.value)} id="message-input" />
 					<button type="submit" id="message-submit">send</button>
-					<SignOut />
+					<Exit />
+					<Back />
 				</form>
 
 			</div>
@@ -144,6 +146,14 @@ function ChatMessage(props) {
 			</div>
 			<p className="message-text">{msg.text}</p>
 		</div>
+	)
+}
+
+function Back() {
+	return (
+		<button className="back">
+			<Link to="/" style={{ textDecoration: 'none', color: 'inherit' }}>back</Link>
+		</button>
 	)
 }
 
