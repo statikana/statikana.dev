@@ -2,41 +2,31 @@
 
 
 #chat {
-	background-color: #222222;
-	color: white;
-	font-family: "JetBrains Mono", monospace;
-
-	width: 100%;
-	border-radius: 1rem;
-}
-
-#chat-room {
-	padding: 0;
-	margin: 0;
-	flex-direction: column;
-}
-
-
-#chatroom-section {
-	width: 100%;
-	overflow-y: hide;
+	width: 60vw;
+	height: 80vh;
+	display: flex;
 }
 
 #messages {
-	flex-direction: column;
 	width: 100%;
-	height: 80vh;
+	height: 100%;
 	overflow-y: auto;
+	padding: 1rem;
+	box-sizing: border-box;
+	background: #222222;
+	border: 1px solid #444;
+	color: #fcfcfc;
+	font-family: "JetBrains Mono", monospace;
 	scrollbar-color: #444 #222;
 	scrollbar-width: thin;
 }
 
 
 #sticky-input {
+	width: 60vw;
+	padding-bottom: 2rem;;
 	position: fixed;
-	width: 100%;
- 	background: #222222;
-	flex-direction: row;
+	bottom: 0;
 }
 
 #message-input {
@@ -89,12 +79,6 @@
 	transition: background .5s;
 }
 
-#chat-room {
-	color: white;
-	padding-right: 2rem;
-	padding-left: 2rem;	
-}
-
 .message-photoURL {
 	width: 30px;
 	height: 30px;
@@ -103,6 +87,8 @@
 
 .message-text {
 	margin-left: .5rem;
+	word-wrap: break-word;
+	overflow: hidden;
 }
 
 .message-chatname {
@@ -121,4 +107,13 @@
 	}
 }
 
+.message {
+	display: flex;
+	flex-direction: column;
+}
 
+.message-text {
+	margin-top: .25rem;
+	word-wrap: break-word;
+	overflow: hidden;
+}

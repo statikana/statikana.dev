@@ -30,9 +30,7 @@ function Chat() {
 				<title>statikana</title>
 				<header></header>
 
-				<section id="chatroom-section">
 					{user ? <ChatRoom /> : <SignIn />}
-				</section>
 			</div>
 		</>
 	);
@@ -43,7 +41,6 @@ function SignIn() {
 		const provider = new firebase.auth.GithubAuthProvider();
 		auth.signInWithPopup(provider).then((result) => {
 			let user = result.user;
-			console.log(user);
 			let userRef = firestore.collection('users');
 			let query = userRef.where('uid', '==', user.uid);
 			// if the user is not in the database, add them
@@ -76,14 +73,17 @@ function ChatRoom() {
 	const query = messagesRef.orderBy('createdAt').limit(100);
 
 	const [messages] = useCollectionData(query);
-	console.log(messages);
 	const [formValue, setFormValue] = useState('');
 
 	const sendMessage = async (e) => {
 		e.preventDefault(); // Prevents the page from refreshing when the form is submitted
 
 		const uid = auth.currentUser.uid;
-		console.log(uid);
+		
+		let currentScrollPos = document.getElementById('messages').scrollTop;
+		let maxScroll = document.getElementById('messages').scrollHeight - document.getElementById('messages').clientHeight;
+
+		let shouldScroll = Math.abs(currentScrollPos - maxScroll) <= 1;
 
 		await messagesRef.add({
 			text: formValue,
@@ -92,27 +92,25 @@ function ChatRoom() {
 		});
 
 		// scroll to the bottom of the chat
-		const chat = document.getElementById('messages');
-		window.scrollTo(0, chat.scrollHeight);
+		if (shouldScroll) {
+			document.getElementById('messages').scrollTop = document.getElementById('messages').scrollHeight;
+		}
 		setFormValue('');
-
 	}
 
 	return (
 		<>
-			<div id="chat-room">
-				<div id="messages">
-					{messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-				</div>
-				
-				<div id="sticky-input">
-					<form onSubmit={sendMessage} id="message-form" autoComplete="off">
-						<input value={formValue} onChange={(e) => setFormValue(e.target.value)} id="message-input" />
-						<button type="submit" id="message-submit">send</button>
-						<SignOut />
-					</form>
+			<div id="messages">
+				{messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+			</div>
+			
+			<div id="sticky-input">
+				<form onSubmit={sendMessage} id="message-form" autoComplete="off">
+					<input value={formValue} onChange={(e) => setFormValue(e.target.value)} id="message-input" />
+					<button type="submit" id="message-submit">send</button>
+					<SignOut />
+				</form>
 
-				</div>
 			</div>
 		</>
 	)
@@ -136,13 +134,12 @@ function ChatMessage(props) {
 
 
 	return (
-		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
-			<p>
+		<div className={`message message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
+			<div className="message-user">
 				{user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
 				{user ? (<a className="message-chatname">{user.email.split('@')[0]}</a>) : (<a>loading...</a>)}
-				<br />
-                <a className="message-text">{msg.text}</a>
-            </p>
+			</div>
+			<p className="message-text">{msg.text}</p>
 		</div>
 	)
 }
