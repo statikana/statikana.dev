@@ -85,16 +85,24 @@ function ChatRoom() {
 		const uid = auth.currentUser.uid;
 		console.log(uid);
 
+		let chat = document.getElementById('messages');
+		let currentScroll = chat.scrollTop;
+		let maxScroll = chat.scrollHeight - chat.clientHeight;
+		let atBottom = Math.abs(currentScroll - maxScroll) < 1;
+
 		await messagesRef.add({
 			text: formValue,
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 			uid
 		});
-
-		// scroll to the bottom of the chat
-		const chat = document.getElementById('messages');
-		window.scrollTo(0, chat.scrollHeight);
+		
+		/* if the user was already at the bottom of the chat, scroll to the bottom again */
+		/* if the user was not at the bottom of the chat, do not scroll to the bottom */
 		setFormValue('');
+
+		if (atBottom) {
+			chat.scrollTop = chat.scrollHeight;
+		}
 
 	}
 
@@ -133,16 +141,53 @@ function ChatMessage(props) {
       }
     }, [snapshot]);
 
+	let text = msg.text;
+	console.log(text);
+	let imgURLs = text.match(/https?:\/\/.*\.(?:jpg|png)/g);
+	let imgElements;
+
+	if (imgURLs) {
+		imgElements = (imgURLs.map((link) => { return <img src={link} className="message-image" />; }));
+	} else {
+		imgElements = [];
+	}
+
+	let textElement = document.createElement('div');
+	textElement.className = "message-content";
+	let textElements = [];
+
+	let links = text.match(/(https?:\/\/[^\s]+)/g);
+	if (!links) {
+		textElements.push(<p className="message-text-portion">{text}</p>);
+	} else {
+		for (let i = 0; links && i < links.length; i++) {
+			const link = links[i];
+			let element = document.createElement('a');
+			element.href = link;
+			element.target = "_blank";
+
+			let textBefore = text.substring(0, text.indexOf(link));
+			textElements.push(
+				<p className="message-text-portion"> {textBefore}</p>,
+				<a href={link} target="_blank" className="message-inline-link">{link}</a>
+			)
+		}
+
+		// the text after the last link
+		let textAfter = text.substring(text.lastIndexOf(links[links.length - 1]) + links[links.length - 1].length);
+		textElements.push(<p className="message-text-portion">{textAfter}</p>);
+	}
 
 
 	return (
 		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
-			<p>
+			<div className="message-direct-content">
 				{user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
 				{user ? (<a className="message-chatname">{user.email.split('@')[0]}</a>) : (<a>loading...</a>)}
 				<br />
-                <a className="message-text">{msg.text}</a>
-            </p>
+				{textElements}
+            </div>
+			{imgElements}
 		</div>
 	)
 }
