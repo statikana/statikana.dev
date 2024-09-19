@@ -134,11 +134,17 @@
 
 .message-direct-content {
 	padding-top: 1rem;
+	word-wrap: break-word;
+	overflow: hidden;
+
 }
 
 .message-inline-link {
 	color: rgb(11, 163, 0);
 	width: fit-content;
+	word-wrap: break-word;
+	overflow: hidden;
+
 }
 
 .message-text-portion {
