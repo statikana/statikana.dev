@@ -105,29 +105,46 @@ function ChatRoom() {
 
 	}
 
+	function mapMessagesToChatMessages(messages) {
+		let currentAuthor = null;
+		let elements = [];
+	
+		for (let i = 0; i < messages?.length; i++) {
+			let msg = messages[i];
+			let isSameAuthor = currentAuthor === msg.uid;
+			currentAuthor = msg.uid;
+			let element = <ChatMessage key={msg.id} message={msg} isSameAuthor={isSameAuthor} />;
+			elements.push(element);
+		}
+		return elements;
+	}
+
 	return (
 		<>
-			<div id="chat-room">
-				<div id="messages">
-					{messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
-				</div>
-				
-				<div id="sticky-input">
-					<form onSubmit={sendMessage} id="message-form" autoComplete="off">
-						<input value={formValue} onChange={(e) => setFormValue(e.target.value)} id="message-input" />
-						<button type="submit" id="message-submit">send</button>
-						<SignOut />
-					</form>
-
-				</div>
+		<div id="chat-room">
+			<div id="messages">
+				{mapMessagesToChatMessages(messages)}
 			</div>
-		</>
+			
+			<div id="sticky-input">
+				<form onSubmit={sendMessage} id="message-form" autoComplete="off">
+					<input value={formValue} onChange={(e) => setFormValue(e.target.value)} id="message-input" />
+					<button type="submit" id="message-submit">send</button>
+					<SignOut />
+				</form>
+
+			</div>
+		</div>
+	</>
 	)
+
 }
+
 
 
 function ChatMessage(props) {
 	const msg = props.message;
+	const isSameAuthor = props.isSameAuthor;
     const userRef = firestore.collection('users');
     const query = userRef.where('uid', '==', msg.uid);
     const [snapshot] = useCollectionData(query);
@@ -143,12 +160,21 @@ function ChatMessage(props) {
 	let text = msg.text;
 	console.log(text);
 	let imgURLs = text.match(/https?:\/\/.*\.(?:jpg|png)/g);
+	let mediaURLs = text.match(/https?:\/\/.*\.(?:mp4|webm)/g);
 	let imgElements;
+	let mediaElements;
 
 	if (imgURLs) {
 		imgElements = (imgURLs.map((link) => { return <img src={link} className="message-image" />; }));
 	} else {
 		imgElements = [];
+	}
+
+
+	if (mediaURLs) {
+		mediaElements = (mediaURLs.map((link) => { return <video src={link} className="message-video" controls />; }));
+	} else {
+		mediaElements = [];
 	}
 
 	let textElement = document.createElement('div');
@@ -179,7 +205,7 @@ function ChatMessage(props) {
 
 
 	return (
-		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'}`}> 
+		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'} ${isSameAuthor ? 'message-same-author' : ''}`}> 
 			<div className="message-direct-content">
 				{user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
 				{user ? (<a className="message-chatname">{user.email.split('@')[0]}</a>) : (<a>loading...</a>)}
@@ -187,6 +213,7 @@ function ChatMessage(props) {
 				{textElements}
             </div>
 			{imgElements}
+			{mediaElements}
 		</div>
 	)
 }

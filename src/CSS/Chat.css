@@ -126,7 +126,25 @@
 	}
 }
 
+.message-same-author {
+	.message-chatname {
+		display: none;
+	}
+	.message-photoURL {
+		display: none;
+	}
+	margin-top: 0;
+	padding-top: 0;
+	
+}
+
 .message-image {
+	padding-top: .5rem;
+	max-width: 30vw;
+	max-height: 50vh;
+}
+
+.message-video {
 	padding-top: .5rem;
 	max-width: 30vw;
 	max-height: 50vh;
