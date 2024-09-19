@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import '../CSS/Chat.css';
 
 import firebase from 'firebase/compat/app';
@@ -79,6 +78,16 @@ function ChatRoom() {
 	const [messages] = useCollectionData(query);
 	const [formValue, setFormValue] = useState('');
 
+	/* scroll to bottom when new message is sent */
+	useEffect(() => {
+		let chat = document.getElementById('messages');
+		let currentScroll = document.getElementById('messages').scrollTop;
+		let maxScroll = document.getElementById('messages').scrollHeight - document.getElementById('messages').clientHeight;
+		if (Math.abs(currentScroll - maxScroll) < 1) {
+			chat.scrollTop = chat.scrollHeight;
+		}
+	}, [messages]);
+
 	const sendMessage = async (e) => {
 		e.preventDefault(); // Prevents the page from refreshing when the form is submitted
 
@@ -86,23 +95,12 @@ function ChatRoom() {
 		if (!uid) {
 			return;
 		}
-
-		let chat = document.getElementById('messages');
-		let currentScroll = chat.scrollTop;
-		let maxScroll = chat.scrollHeight - chat.clientHeight;
-		let atBottom = Math.abs(currentScroll - maxScroll) < 1;
-
 		await messagesRef.add({
 			text: formValue,
 			createdAt: firebase.firestore.FieldValue.serverTimestamp(),
 			uid
 		});
 		setFormValue('');
-
-		if (atBottom) {
-			chat.scrollTop = chat.scrollHeight;
-		}
-
 	}
 
 	function mapMessagesToChatMessages(messages) {
@@ -205,7 +203,7 @@ function ChatMessage(props) {
 
 
 	return (
-		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'} ${isSameAuthor ? 'message-same-author' : ''}`}> 
+		<div className={`message-${msg.uid === auth.currentUser.uid ? 'sent' : 'received'} ${isSameAuthor ? 'message-same-author' : 'message-new-author'}`}> 
 			<div className="message-direct-content">
 				{user ? (<img src={user.photoURL} className="message-photoURL" />) : (<a>loading...</a>)}
 				{user ? (<a className="message-chatname">{user.email.split('@')[0]}</a>) : (<a>loading...</a>)}
