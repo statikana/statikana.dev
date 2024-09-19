@@ -43,7 +43,6 @@ function SignIn() {
 		const provider = new firebase.auth.GithubAuthProvider();
 		auth.signInWithPopup(provider).then((result) => {
 			let user = result.user;
-			console.log(user);
 			let userRef = firestore.collection('users');
 			let query = userRef.where('uid', '==', user.uid);
 			// if the user is not in the database, add them
@@ -81,9 +80,9 @@ function ChatRoom() {
 	/* scroll to bottom when new message is sent */
 	useEffect(() => {
 		let chat = document.getElementById('messages');
-		let currentScroll = document.getElementById('messages').scrollTop;
-		let maxScroll = document.getElementById('messages').scrollHeight - document.getElementById('messages').clientHeight;
-		if (Math.abs(currentScroll - maxScroll) < 1) {
+		let currentScroll = chat.scrollTop;
+		let maxScroll = chat.scrollHeight - chat.clientHeight;
+		if (Math.abs(currentScroll - maxScroll) < 42) {
 			chat.scrollTop = chat.scrollHeight;
 		}
 	}, [messages]);
@@ -156,7 +155,6 @@ function ChatMessage(props) {
     }, [snapshot]);
 
 	let text = msg.text;
-	console.log(text);
 	let imgURLs = text.match(/https?:\/\/.*\.(?:jpg|png)/g);
 	let mediaURLs = text.match(/https?:\/\/.*\.(?:mp4|webm)/g);
 	let imgElements;
