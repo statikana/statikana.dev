@@ -42,7 +42,7 @@
     ]
   },
   "engines": {
-    "node": "latest",
+    "node": "22.14.0",
     "npm": "latest"
   }
 }
